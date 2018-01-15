@@ -15,9 +15,9 @@ The goals / steps of this project are the following:
 
 [image1]: ./examples/undistort_output.png "Undistorted"
 [image2]: ./test_images/test1.jpg "Test Image"
-[image3]: ./output_images/undistorted.jpg "Undistorted"
+[image3]: ./output_images/undistorted_img.jpg "Undistorted"
 [image4]: ./output_images/binary.jpg
-[image5]: ./output_images/ROI.jpg
+[image5]: ./output_images/ROI.jpg "Region Selected"
 [image6]: ./output_images/Pers_lane.png
 [image7]: ./output_images/l_l.jpg
 [image8]: ./output_images/r_l.jpg
@@ -60,7 +60,7 @@ A combination of color and gradient thresholds was used to generate a binary ima
 
 After Selecting Region:
 
-![alt text][image6]
+![alt text][image5]
 
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
@@ -162,7 +162,7 @@ The distance from the center of the lane is calculated by measuring the distance
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [link to my video result](./project_video_output.mp4)
+Here's a [link to my video result][video]
 
 ---
 
