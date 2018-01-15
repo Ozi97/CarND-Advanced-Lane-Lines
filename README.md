@@ -31,7 +31,7 @@ The goals / steps of this project are the following:
 
 #### 1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
 
-The code for this step is contained in the Camera Calibration and Distortion Correction section of the IPython notebook located in "ALane.ipynb".  
+The code for this step is contained in the Camera Calibration and Distortion Correction section of the IPython notebook located in `ALane.ipynb`.  
 
 Using `cv2.findChessboardCorners`, the corners points are stored in an array `imgpoints` for each calibration image where the chessboard could be found. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  
 
