@@ -18,7 +18,7 @@ The goals / steps of this project are the following:
 [image3]: ./output_images/undistorted_img.jpg "Undistorted"
 [image4]: ./output_images/binary.jpg
 [image5]: ./output_images/ROI.jpg "Region Selected"
-[image6]: ./output_images/Pers_lane.png
+[image6]: ./output_images/Pers_lane.jpg
 [image7]: ./output_images/l_l.jpg
 [image8]: ./output_images/r_l.jpg
 [image9]: ./output_images/lane_lines.jpg
@@ -90,13 +90,13 @@ This resulted in the following source and destination points:
 
 Example:
 
-Undistorted image with source points drawn:
-
-![alt text][image6]
-
 Warped image:
 
 ![alt text][image12]
+
+Binary warped image:
+
+![alt text][image6]
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
