@@ -54,7 +54,7 @@ Distortion-corrected image:
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
 
-A combination of color and gradient thresholds was used to generate a binary image. Color theresholding for yellow and white lanes was done in HSV space then HLS. S and L channel was used. Gardient was computed along x direction. The code for these filters is present in the heading `Binary Image`
+A combination of color and gradient thresholds was used to generate a binary image. Color theresholding for yellow and white lanes was done in HSV space then HLS. S and L channel was used. Gardient was computed along x direction. The code for these filters is present in the heading `Binary Image`. L channel in LUV with upper and lower thresholds of 255 has been added. 
 
 ![alt text][image4]
 
