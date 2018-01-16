@@ -25,7 +25,7 @@ The goals / steps of this project are the following:
 [image10]: ./output_images/lane.jpg
 [image11]: ./output_images/finall.jpg
 [image12]: ./output_images/img_w.jpg
-[video]: ./p4.mp4 "Video"
+[video]: ./finally_final.mp4 "Video"
 
 ### Camera Calibration
 
@@ -68,25 +68,26 @@ After Selecting Region:
 The code for  perspective transform is included in a function called `transformation_matrix()`. The function takes as inputs an image (`img`). After having poor results with lane coordinates, I decided to use predefined coordinates.
 
 ```python
- src = np.array([[585, 455],
-                [705, 455],
-                [1100, 680],
-                [250 , 700]], np.float32)
-
-        dst = np.array([[300 ,100],
-                [1000, 100],
-                [1000, 720],
-                [300, 720]], np.float32)
+src = np.float32([
+    [585,460],
+    [203,720],
+    [1127,720],
+    [695,460]])
+dst = np.float32([
+    [320,0],
+    [320,720],
+    [960,720],
+    [960,0]])
 ```
 
 This resulted in the following source and destination points:
 
 | Source        | Destination   |
 |:-------------:|:-------------:|
-| 585, 455      | 300, 100        |
-| 705, 455      | 1000, 100      |
-| 1100, 680     | 1000, 720      |
-| 250, 700      | 300, 720        |
+| 585, 460      | 300, 0        |
+| 203, 720      | 320, 100      |
+| 1127, 720     | 960, 720      |
+| 695, 460      | 960, 0        |
 
 Example:
 
@@ -100,29 +101,43 @@ Binary warped image:
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
-In the `Identifying lane-line pixels` heading the `get_lane_px` searches for lane pixels using window size of 100px and base coordinates of a lane.
+In the `Identifying lane-line pixels` heading the `get_lane_px` searches for lane pixels using a sliding size of 50px and base coordinates of a lane.
 
-```
-    window_size = 100
+``` #sliding window
+    margin = 100
+    nwindows = 9
+    window_height = np.int(image.shape[0]/nwindows)
+    leftx_current = left_base #[0]
+    rightx_current = right_base#[0]
+    minpix = 50 #min pixel found in each window
+    left_lane_inds = []
+    right_lane_inds = []
     
-    right_base = right_base[0]
-    
-    if(right_base > window_size*2):
-            window_low = right_base - window_size
-    else:
-            window_low = 0
+    nonzero = image.nonzero()
+    nonzeroy = np.array(nonzero[0])
+    nonzerox = np.array(nonzero[1])
 
-    window_high = right_base + window_size
-    
-    # Define a region
-    window_r = image[:, window_low:window_high]
+    for window in range(nwindows):
+        win_y_low = image.shape[0] - (window+1)*window_height
+        win_y_high = image.shape[0] - (window*window_height)
+        win_xleft_low = leftx_current - margin
+        win_xleft_high = leftx_current + margin
+        win_xright_low = rightx_current - margin
+        win_xright_high = rightx_current + margin 
+        
+        good_left_inds = ((nonzeroy >= win_y_low) & (nonzeroy < win_y_high) & (nonzerox >= win_xleft_low)\
+                          & (nonzerox < win_xleft_high)).nonzero()[0]
+        good_right_inds = ((nonzeroy >= win_y_low) & (nonzeroy < win_y_high) & (nonzerox >= win_xright_low)\
+                          & (nonzerox < win_xright_high)).nonzero()[0]
+        left_lane_inds.append(good_left_inds)
+        right_lane_inds.append(good_right_inds)
 
-    # Find the coordinates of the white pixels in this region
-    #print(window_r[:100])
-    right_x, right_y = np.where(window_r == 1)
-
-    # original location
-    right_y += (window_low) 
+        if len(good_left_inds) > minpix:
+            leftx_current = np.int(np.mean(nonzerox[good_left_inds]))
+        if len(good_right_inds) > minpix:
+            rightx_current = np.int(np.mean(nonzerox[good_right_inds]))
+    left_lane_inds = np.concatenate(left_lane_inds)
+    right_lane_inds = np.concatenate(right_lane_inds)
 ```
 
 The output looks like this:
